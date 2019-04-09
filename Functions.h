@@ -4,7 +4,7 @@ char applyKey (char x, int y);
 int keycheck(int key, int c);
 int countMax(char message[]);
 
-
+/*
 //-------------------------------------------------------------------------//
 int countMax(char message[]){
     int x=0, max=0;
@@ -46,5 +46,5 @@ int keycheck(int key, int c){
              }
         }
         return 0;
-}
+}*/
 #endif

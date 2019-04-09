@@ -37,7 +37,7 @@ int main()
        return 0;
     }
     
-    max=countMax(message);
+    max=countMax(message);      //calculates total number of letters in the array
     
     for (count=0; count<=max; count++){    
         if (message[count]>=97 && message[count]<=122)  //checks for lower case and converts to upper case
