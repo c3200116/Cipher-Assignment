@@ -1,7 +1,4 @@
 
-//char applyKey(char x, int y);
-//int keycheck (int x, int y);
-
 
 
 #include <stdio.h> 
@@ -54,6 +51,8 @@ int main()
       
        return 0; 
    }
+//-------------------------------------------------------------------------//
+//DECRYPTION ALGORITHM - SAME AS ABOVE BUT -KEY INSTEAD OF +KEY TO MESSAGE
 
    else if (menu==2){
        printf("\nInput message to be DEcrypted (max 200 characters):\n");
@@ -70,8 +69,7 @@ int main()
             if(message[x]>=0 || message[x]<=127)              //in the string and assigns it to 'max'
             max++;
         }
-       //printf("number of digits in string = %d\n", max);   //prints number of digits in string
-                                                                //used for testing only
+
        
        for (count=0; count<=max; count++){                      //for each digit, checks if it's a letter
            if (message[count]>=65 && message[count]<=90){       //then assigns new value
@@ -89,6 +87,8 @@ int main()
        return 0; 
    }
 
+//-------------------------------------------------------------//
+//IF NO VALID MENU OPTION IS CHOSEN
     else{
     printf("INVALID CHOICE OR NOT YET IMPLEMENTED.\n");
     return 0;
@@ -97,29 +97,3 @@ int main()
     
 }
 
-/*
-char applyKey (char x, int y){
-    x=x+y;
-        if (x>90)
-            x=x-26;
-        else if (x<65)
-            x=x+26;
-    return x;
-}
-
-int keycheck(int key, int c){
-   
-       while ((key<-25 || key>25) && (c>0)){
-        printf("\nEnter encryption key value between -25 to 25:\n");      //takes the encryption key value
-        scanf("%d", &key);
-             if (key<-25 || key>25){
-                  c--;
-                  printf("Invalid encryption value, you have %d attempts remaining.\n", c);
-             }
-             else {
-             return key;
-             }
-        }
-
-}
-*/
