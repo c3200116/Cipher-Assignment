@@ -2,20 +2,20 @@
 #define VARIABLE
 char applyKey (char x, int y);
 int keycheck(int key, int c);
-
+int countMax(char message[]);
 
 
 //-------------------------------------------------------------------------//
-/*char applySubs (char x){
-   
-    switch(x){
-        case 65:x=subs[0];
-        case 66:x=subs[1];
-        default: printf("TESTING\n")
-    }
-    return x;
+int countMax(char message[]){
+    int x=0, max=0;
+    for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
+        if(message[x]>=0 || message[x]<=127)              //in the string and a
+         max++;
+        }
+    return max;
 }
-*/
+
+
 char applyKey (char x, int y){
     x=x+y;
         if (x>90)
@@ -36,10 +36,15 @@ int keycheck(int key, int c){
              if (key<-25 || key>25){
                   c--;
                   printf("Invalid encryption value, you have %d attempts remaining.\n", c);
+                  if (c==0){
+                    printf("INVALID INPUT, PLEASE RESTART.\n");
+                    return 0;
+                  }
              }
              else {
              return key;
              }
         }
+        return 0;
 }
 #endif

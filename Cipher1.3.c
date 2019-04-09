@@ -36,11 +36,9 @@ int main()
        printf("\nInvalid menu selection, please start again.\n");
        return 0;
     }
-
-    for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
-         if(message[x]>=0 || message[x]<=127)              //in the string and a
-         max++;
-        }
+    
+    max=countMax(message);
+    
     for (count=0; count<=max; count++){    
         if (message[count]>=97 && message[count]<=122)  //checks for lower case and converts to upper case
             message[count] = message[count]-32;
@@ -50,79 +48,33 @@ int main()
 //-----------------------------------------------------------------//
 //ROTATION ENCRYTION
    
-   if (menu==1){
+   if (menu==1 || menu==2){
                        
-       key=keycheck(key, c);                                  //function which checks the input key is valid
+       key=keycheck(key, c);                //function to input key and check it's within valid range.
        
-        if (key<-25 || key>25){                               //if no correct key input, kill program            
-            printf("INVALID INPUT, PLEASE RESTART.\n");
-            return 0;
+        if (menu==2){
+            key=-key;                       //switches key for DECRYPTION
         }
-       
-        for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
-            if(message[x]>=0 || message[x]<=127)              //in the string and assigns it to 'max'
-            max++;
-        }
-       
-       
        for (count=0; count<=max; count++){                      //for each digit, checks if it's a letter
            if (message[count]>=65 && message[count]<=90){       //then assigns new value
-            message[count] = applyKey(message[count], key);}    //
-            
-    
-      }
+            message[count] = applyKey(message[count], key);
+            }  
+     }
      
-       printf("\nYour encrytped message reads:\n%s\n", message); 
-      
-       return 0; 
-   }
+    printf("\nYour message reads:\n%s\n", message);   
+    return 0; 
+    }
 //-------------------------------------------------------------------------//
-//DECRYPTION ALGORITHM - SAME AS ABOVE BUT -KEY INSTEAD OF +KEY TO MESSAGE
-
-   else if (menu==2){
-                       
-       
-       key=keycheck(key, c);                                  //function which checks the input key is valid
-       
-        if (key<-25 || key>25){                               //if no correct key input, kill program            
-            printf("INVALID INPUT, PLEASE RESTART.\n");
-            return 0;
-        }
-       
-        for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
-            if(message[x]>=0 || message[x]<=127)              //in the string and assigns it to 'max'
-            max++;
-        }
-
-       
-       for (count=0; count<=max; count++){                      //for each digit, checks if it's a letter
-           if (message[count]>=65 && message[count]<=90){       //then assigns new value
-            message[count] = applyKey(message[count], -key);}    //
-            
-    
-      }
-     
-       printf("\nYour encrytped message reads:\n%s\n", message); 
-      
-       return 0; 
-   }
-
-//--------------------------------------------------------------//
 //ENCRYPTION WITH SUBSTITUTION..
     else if (menu==3){
     
 
     printf("\nInput substitution key (max 26 characters, no spaces):\n");
-       scanf(" %[^\n]s", subs);
-       
-    for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
-        if(message[x]>=0 || message[x]<=127)              //in the string and assigns it to 'max'
-            max++;
-        }
+    scanf(" %[^\n]s", subs);       
         
     for(x=0; subs[x]!='\0'; x++){                      //calculates the total number of digits                                         
         if(subs[x]>=0 || subs[x]<=127)              //in the subs key and assigns it to 'subsmax'
-            subsmax++;
+            subsmax++;           
     }
     
     if (subsmax!=26){
@@ -130,10 +82,8 @@ int main()
         return 0;
     }
 
-        
-
     for (count=0; count<=max; count++){
-           switch(message[count]){
+        switch(message[count]){
             case 65:message[count]=subs[0];
             case 66:message[count]=subs[1];
             case 67:message[count]=subs[2];
