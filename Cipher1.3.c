@@ -1,4 +1,4 @@
-
+//test
 //char applyKey(char x, int y);
 //int keycheck (int x, int y);
 
