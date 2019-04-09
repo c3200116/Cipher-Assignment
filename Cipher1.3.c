@@ -66,17 +66,14 @@ int main()
     }
 //-------------------------------------------------------------------------//
 //ENCRYPTION WITH SUBSTITUTION..
-    else if (menu==3){
+   
+   else if (menu==3){
     
-
     printf("\nInput substitution key (max 26 characters, no spaces):\n");
     scanf(" %[^\n]s", subs);       
         
-    for(x=0; subs[x]!='\0'; x++){                      //calculates the total number of digits                                         
-        if(subs[x]>=0 || subs[x]<=127)              //in the subs key and assigns it to 'subsmax'
-            subsmax++;           
-    }
-    
+    subsmax=countMax(subs);
+   
     if (subsmax!=26){
         printf("Incorrect key format, please try again using exactly 26 characters.\n");
         return 0;
