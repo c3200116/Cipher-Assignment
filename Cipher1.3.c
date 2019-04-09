@@ -45,11 +45,11 @@ int main()
     }
 
 
-
+//-----------------------------------------------------------------//
+//ROTATION ENCRYTION
    
    if (menu==1){
                        
-       
        key=keycheck(key, c);                                  //function which checks the input key is valid
        
         if (key<-25 || key>25){                               //if no correct key input, kill program            
@@ -78,8 +78,7 @@ int main()
 //DECRYPTION ALGORITHM - SAME AS ABOVE BUT -KEY INSTEAD OF +KEY TO MESSAGE
 
    else if (menu==2){
-      // printf("\nInput message to be DEcrypted (max 200 characters):\n");
-      //scanf(" %[^\n]s", message);                           //takes a string of input including spaces and assigns to array 'str'
+                       
        
        key=keycheck(key, c);                                  //function which checks the input key is valid
        
@@ -110,8 +109,7 @@ int main()
 //ENCRYPTION WITH SUBSTITUTION..
     else if (menu==3){
     
-   // printf("\nInput message to be encrypted (max 200 characters):\n");
-   //    scanf(" %[^\n]s", message);
+
     printf("\nInput substitution key (max 26 characters, no spaces):\n");
        scanf(" %[^\n]s", subs);
        
