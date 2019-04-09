@@ -6,34 +6,36 @@
 
 int main() 
 { 
-   char message[200];                //initilises an array of size 200
-   char subs[200];
-   int key=-100;
-   int count=0, c=5;
-   int max=0, subsmax=0, x=0;
-   int menu=0;
+   char message[200];               // -initilises an array of size 200 to store message.
+   char subs[200];                  // -array to store substitution encryption key.
+   int key=-100;                    // -variable to store rotaion key.
+   int count=0, c=5;                //
+   int max=0, subsmax=0, x=0;       // -counters
+   int menu=0;                      //
    
+   //------------------------------------------------------------//
+   //USER INPUT MENU
    printf("Choose from the following options;\n1) Encrypt a message using ROTATION cipher.\n2) Decrypt a message using ROTATION and known key value.\n");
    printf("3) Encrypt a message with SUBSTITUTION cipher.\n4) DECRYPT a message with SUBSTITUTION cipher and known key.\n");
    printf("Enter 1 - 4 followed by <enter>: ");
    scanf("%d", &menu);
    
-   switch (menu){
-    case 1:{ printf("\nInput message to be ENCRYPTED (max 200 characters):\n");
-             scanf(" %[^\n]s", message);   
-             break;}                      //takes a string of input including spaces and assigns to array 'str'
-    case 2:{ printf("\nInput message to be DECRYPTED (max 200 characters):\n");
-             scanf(" %[^\n]s", message); 
-             break;}
-    case 3:{ printf("\nInput message to be ENCRYPTED (max 200 characters):\n");
-             scanf(" %[^\n]s", message); 
-             break;}   
-    case 4:{ printf("\nInput message to be DECRYPTED (max 200 characters):\n");
-             scanf(" %[^\n]s", message); 
-             break;}
-    default: printf("\nInvalid menu selection, please start again.\n");
+   
+   //------------------------------------------------------------//
+   //USER INPUT MESSAGE WITH STDIN - CHECK FOR LOWER CASE AND CONVERT TO UPPER CASE
+   //STORE IN 'message' ARRAY
+   if (menu==1 || menu ==3){
+        printf("\nInput message to be ENCRYPTED (max 200 characters):\n");
+        scanf(" %[^\n]s", message);   
+        }                      
+   else if (menu==2 || menu==4){
+        printf("\nInput message to be DECRYPTED (max 200 characters):\n");
+        scanf(" %[^\n]s", message); 
+        }
+   else {
+       printf("\nInvalid menu selection, please start again.\n");
+       return 0;
     }
-
 
     for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
          if(message[x]>=0 || message[x]<=127)              //in the string and a
