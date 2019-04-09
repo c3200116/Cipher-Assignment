@@ -4,9 +4,18 @@ char applyKey (char x, int y);
 int keycheck(int key, int c);
 
 
+
 //-------------------------------------------------------------------------//
-
-
+/*char applySubs (char x){
+   
+    switch(x){
+        case 65:x=subs[0];
+        case 66:x=subs[1];
+        default: printf("TESTING\n")
+    }
+    return x;
+}
+*/
 char applyKey (char x, int y){
     x=x+y;
         if (x>90)

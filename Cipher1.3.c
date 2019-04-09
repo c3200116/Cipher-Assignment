@@ -9,13 +9,15 @@
 int main() 
 { 
    char message[200];                //initilises an array of size 200
+   char subs[200];
    int key=-100;
    int count=0, c=5;
-   int max=0, x=0;
+   int max=0, subsmax=0, x=0;
    int menu=0;
    
-   printf("Choose from the following options;\n1) Encrypt a message using rotation.\n2) Decrypt a message using rotation and known key value.\n");
-   printf("Enter 1 or 2: ");
+   printf("Choose from the following options;\n1) Encrypt a message using ROTATION cipher.\n2) Decrypt a message using ROTATION and known key value.\n");
+   printf("3) Encrypt a message with SUBSTITUTION cipher.\n4) DECRYPT a message with SUBSTITUTION cipher and known key.\n");
+   printf("Enter 1 - 4 followed by <enter>: ");
    scanf("%d", &menu);
    
    if (menu==1){
@@ -86,6 +88,49 @@ int main()
       
        return 0; 
    }
+
+//--------------------------------------------------------------//
+//ENCRYPTION WITH SUBSTITUTION..
+    else if (menu==3){
+    
+    printf("\nInput message to be encrypted (max 200 characters):\n");
+       scanf(" %[^\n]s", message);
+    printf("\nInput substitution key (max 26 characters, no spaces):\n");
+       scanf(" %[^\n]s", subs);
+       
+    for(x=0; message[x]!='\0'; x++){                      //calculates the total number of digits                                         
+        if(message[x]>=0 || message[x]<=127)              //in the string and assigns it to 'max'
+            max++;
+        }
+        
+    for(x=0; subs[x]!='\0'; x++){                      //calculates the total number of digits                                         
+        if(subs[x]>=0 || subs[x]<=127)              //in the subs key and assigns it to 'subsmax'
+            subsmax++;
+    }
+    
+    if (subsmax!=26){
+        printf("Incorrect key format, please try again using exactly 26 characters.\n");
+        return 0;
+    }
+    for (count=0; count<=max; count++){
+        if (message[count]>=97 && message[count]<=122){  //checks for lower case and converts to upper case
+            message[count] = message[count]-32;   
+        }
+    }
+
+    for (count=0; count<=max; count++){
+           switch(message[count]){
+            case 65:message[count]=subs[0];
+            case 66:message[count]=subs[1];
+            case 67:message[count]=subs[2];
+            case 68:message[count]=subs[3];
+            default:printf("test\n");
+        }
+
+        printf("\nYour encrytped message reads:\n%s\n", message); 
+        return 0;
+    }
+}
 
 //-------------------------------------------------------------//
 //IF NO VALID MENU OPTION IS CHOSEN
