@@ -10,12 +10,16 @@ int main()
 { 
    char message[200];               // -initilises an array of size 200 to store message.
    char subs[200];                  // -array to store substitution encryption key.
-   char alpha[26]={65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90};
+   char alpha[26];
    int key=-100;                    // -variable to store rotaion key.
-   int count=0, c=5;                //
-   int max=0, subsmax=0;                  // -counters
+   int count=0, c=5, a=0;           //
+   int max=0, subsmax=0;            // -counters
    int menu=0;                      //
   
+  for (a=0; a<26; a++){
+      alpha[a]=a+65;
+  }
+ 
    //------------------------------------------------------------//
    //USER INPUT MENU
    printf("\nChoose from the following options;\n1) Encrypt a message using ROTATION cipher.\n2) Decrypt a message using ROTATION and known key value.\n");
