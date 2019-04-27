@@ -22,15 +22,16 @@
 
 int main() 
 { 
-    char message[1000];              // -initilises an array of size 200 to store message.
-    char newmessage[1000];
+    char message[1000];              // -initilises an array to store message.
+    char newmessage[1000];           // -array for processed message storage
     char subs[100];                  // -array to store substitution encryption key.
-    char alpha[26];
-    //char filename[100];
+    char alpha[27];                  // -unmodified alphabet array
+    char filename[50];
+    char keyname[50];
     int key=-100;                    // -variable to store rotation key.
-    int count=0, c=5, a=0;           //
+    int count=0, c=5, a=0;           // ---------
     int max=0, subsmax=0;            // -counters
-    int menu=0;                      //
+    int menu=0;                      // ---------
   
     for (a=0; a<26; a++){
         alpha[a]=a+65;
@@ -48,19 +49,22 @@ int main()
     scanf("%d", &menu);
    
    
-    FILE *input;
+    FILE *input;            //file pointers
     FILE *output;
     output=fopen("output.txt", "w");
-    input=fopen("input.txt", "r");
     
-    //---------UNCOMMENT TO ACCEPT FILE NAME/LOACTION FROM USER---------//
-    //printf("Enter name of file where message is stored followed by <enter>: \n");
-    //scanf("%s", filename);
-    //input=fopen(filename, "r");
-    //---------------------------------------------------------------//
-    fscanf(input, "%[^0]c", message);
+    printf("Enter name of file where message is stored followed by <enter>: \n");
+    scanf("%s", filename);              
+    input=fopen(filename, "r");         //directs pointer to user specified filename
+    
+    if (input==NULL){
+            printf("Unable to open file, or does not exist - please restart.\n");
+            return 0;
+        }
+        
+    fscanf(input, "%[^0]c", message);   //reads message from file in, assigns to array
    
-    max=countMax(message);      //calculates total number of letters in the array
+    max=countMax(message);              //calculates total number of letters in the array
     
     for (count=0; count<=max; count++){    
         if (message[count]>=97 && message[count]<=122)  //checks for lower case and converts to upper case
@@ -100,9 +104,18 @@ int main()
 //Input key value via stdin
    
     else if (menu==3){
-    
-        printf("\nInput substitution key (max 26 characters, no spaces):\n");
-        scanf(" %[^\n]s", subs);       
+        FILE *subskey;
+        
+        printf("Enter filename where cipher key is located, followed by <enter>:\n");
+        scanf("%s", keyname);
+        subskey=fopen(keyname, "r");
+        
+        if (subskey==NULL){
+            printf("Unable to open file, or does not exist - please restart.\n");
+            return 0;
+        }
+        
+        fscanf(subskey, "%[^0]c", subs);
         
         subsmax=countMax(subs);     //counts number of chars in key, if incorrect exits.
     
@@ -140,8 +153,18 @@ int main()
 
     else if (menu==4){
     
-        printf("\nInput substitution cipher key (max 26 characters, no spaces):\n");
-        scanf(" %[^\n]s", subs);       
+        FILE *subskey;
+        
+        printf("Enter filename where cipher key is located, followed by <enter>:\n");
+        scanf("%s", keyname);
+        subskey=fopen(keyname, "r");
+        
+        if (subskey==NULL){
+            printf("Unable to open file, or does not exist - please restart.\n");
+            return 0;
+        }
+        
+        fscanf(subskey, "%[^0]c", subs);       
         
         subsmax=countMax(subs);
     
