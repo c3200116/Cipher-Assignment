@@ -1,4 +1,18 @@
-//WEEK 7 LECTURE FOR READING AND WRITING TO FILES INSTEAD OF SCANF
+/*
+ * Program to process a message, adding or removing a cipher.
+ * 
+ * User input menu with stdin to choose option.
+ * 
+ * Message to be used to be written in text file. File name specified by user via stdin.
+ * Encryption/decryption key input via stdin for rotation, or text file for substitution.
+ * 
+ * Message read from file, transferred to array. 
+ * Checked for case sensitivity and converted as required.
+ * 
+ * Menu option chosen - appropriate cipher function applied, new message stored in seperate array
+ * 
+ * Processed message printed to screen via stdout and to text file 'output.txt'
+ */
 
 
 #include <stdio.h> 
