@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "Functions.h"
-
+#include <string.h>
 
 
 //-------------------------------------------//
@@ -89,4 +89,30 @@ int keycheck(int key, int c){
 }
 
 //-------------------------------------------------------------//
+//WORD ANALYSIS..
+//takes an input message string and test word then checks each character sequentially against message text
+//if at any point the values do not match, breaks and restarts test word sequence from first value
+//while continuing through message text. 
+//If all test values successfully match sequentially a word has been found and count is increased and returned.
 
+int wordcheck(char * newmessage, char * wordtest){
+    int i=1, j=0, found=0, count=0;
+    int messageLen=0, testLen=0;
+
+    messageLen = strlen(newmessage);      // length of string
+    testLen = strlen(wordtest)-2;      // length of word to be searched
+    
+    
+    for(i=0; i <= messageLen-testLen; i++){
+        found = 1;                              //checks first char of test word and first char of message 
+        for(j=0; j<testLen; j++){               //if they are == then test next value until all values of test word
+            if(newmessage[i + j] != wordtest[j]){  //have been checked. If all are == then entire word matches and count++
+                found = 0;
+                break;                          //if any if the test values are != then break and start from test value 1 again
+            }
+        }
+        if(found == 1)
+            count++;                            //final count value shows total number of times all testvalues were successfully matched sequentially
+    }
+    return count;
+}

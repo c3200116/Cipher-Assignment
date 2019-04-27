@@ -17,6 +17,7 @@
 
 #include <stdio.h> 
 #include "Functions.h"
+#include <string.h>
 
 
 
@@ -24,6 +25,7 @@ int main()
 { 
     char message[1000];              // -initilises an array to store message.
     char newmessage[1000];           // -array for processed message storage
+    char wordtest[100];
     char subs[100];                  // -array to store substitution encryption key.
     char alpha[27];                  // -unmodified alphabet array
     char filename[50];
@@ -192,37 +194,46 @@ int main()
     else if (menu==5){
         FILE *words;
         words=fopen("words.txt", "r");
-        int try=1;
         
+        int total=0, same=0;
+        int m=0;
         
         for (key=1; key<26; key++){
-            while (try==1){
                 for (count=0; count<=max; count++){                      //for each digit, checks if it's a letter
                     if (message[count]>=65 && message[count]<=90){       //then assigns new value
                         newmessage[count]=applyKey(message[count], key);
                     }
-                    else
+                    else{
                         newmessage[count]=message[count];
-             
+                    }      
                 }
-                key++;
-                printf("\n\n%s\n", newmessage);
-                printf("Save attempt or try again?\n");
-                printf("Press '1' to try again or '2' to save file and quit.\n");
-                scanf("%d", &try);
-                
-                
-            
-            //PERFORM WORD ANALYSIS
-            //DECIDE IF TO CONTINUE OR QUIT
-            
-           
-            }
-        }
 
-        printf("\nYour message has been printed to file 'output.txt' and reads:\n\n%s\n", newmessage);
-        fprintf(output, "%s", newmessage);
- 
+                fgets(wordtest, sizeof wordtest, words); // read first line from test words and 
+                total=0;
+                while (feof(words)==0){
+                    same=wordcheck(newmessage, wordtest);
+                    total=total+same;
+                    fgets(wordtest, sizeof wordtest, words);
+                    
+                }
+                printf("%d words matched with key '%d'!\n", total, key); 
+                    if (total>=3){
+                        printf("\n%s\n\n", newmessage);
+                        printf("High probability of successful decryption with key value %d.\n\nPress '1' to save file or any other key to continue testing.\n", key);
+                        scanf("%d", &m);
+                        if (m==1){
+                            printf("\nYour message has been printed to file 'output.txt'\");
+                            fprintf(output, "%s", newmessage);
+                            return 0;
+                        }
+                        
+                            
+                    }
+            rewind(words);                    
+        }
+        
+
+        printf("All values tested, no valid solution found.\n");
         return 0;
     }
 //-------------------------------------------------------------//
