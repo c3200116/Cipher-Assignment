@@ -34,7 +34,7 @@ int main()
     int key=-100;                    // -variable to store rotation key.
     int count=0, c=5, a=0;           // ---------
     int max=0, subsmax=0;            // -counters
-    int menu=0;                      // --------
+    int exit=4, menu=0;               // --------
   
     for (a=0; a<26; a++){
         alpha[a]=a+65;
@@ -42,6 +42,7 @@ int main()
  
     //------------------------------------------------------------//
     //USER INPUT MENU
+    
     printf("\nChoose from the following options;\n");
     printf("1) Encrypt a message using ROTATION cipher.\n");
     printf("2) Decrypt a message using ROTATION and known key value.\n");
@@ -50,6 +51,17 @@ int main()
     printf("5) DECRYPT a rotation cipher with no key.\n");
     printf("Enter 1 - 5 followed by <enter>: ");
     scanf("%d", &menu);
+    
+    while (menu<1 || menu>5){
+        --exit;
+        printf("INVALID CHOICE - PLEASE RETRY, %d TRYS REMAINING\n", exit);
+        if (exit==0){
+                printf("NO VALID OPTION CHOSEN - PLEASE RESTART\n");
+                return 0;
+            }
+            scanf("%d", &menu);
+    }
+
    
    
     FILE *input;            //file pointers
