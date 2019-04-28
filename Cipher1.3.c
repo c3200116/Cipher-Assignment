@@ -1,15 +1,16 @@
 /*
  * Program to process a message, adding or removing a cipher.
  * 
- * User input menu with stdin to choose option.
+ * User input menu with stdin to choose between options, rotation/substitution/encrypt/decrypt.
  * 
- * Message to be used to be written in text file. File name specified by user via stdin.
+ * Message to be processed must be written in text file. File name specified by user via stdin.
  * Encryption/decryption key input via stdin for rotation, or text file for substitution.
  * 
+ * --------------------------------------------
  * Message read from file, transferred to array. 
  * Checked for case sensitivity and converted as required.
  * 
- * Menu option chosen - appropriate cipher function applied, new message stored in seperate array
+ * Menu option chosen by user - appropriate cipher function applied, new message stored in seperate array
  * 
  * Processed message printed to screen via stdout and to text file 'output.txt'
  */
@@ -33,7 +34,7 @@ int main()
     int key=-100;                    // -variable to store rotation key.
     int count=0, c=5, a=0;           // ---------
     int max=0, subsmax=0;            // -counters
-    int menu=0;                      // ---------
+    int menu=0;                      // --------
   
     for (a=0; a<26; a++){
         alpha[a]=a+65;
@@ -53,7 +54,7 @@ int main()
    
     FILE *input;            //file pointers
     FILE *output;
-    output=fopen("output.txt", "w");
+    output=fopen("output.txt", "w");  
     
     printf("Enter name of file where message is stored followed by <enter>: \n");
     scanf("%s", filename);              
@@ -64,7 +65,7 @@ int main()
             return 0;
         }
         
-    fscanf(input, "%[^0]c", message);   //reads message from file in, assigns to array
+    fscanf(input, "%[^0]c", message);   //reads message from file in until terminating zero, assigns to array
    
     max=countMax(message);              //calculates total number of letters in the array
     
@@ -81,10 +82,10 @@ int main()
   
     if (menu==1 || menu==2){
                        
-       key=keycheck(key, c);                //function to input key and check it's within valid range.
+       key=keycheck(key, c);    //function to input key and check it's within valid range.
        
         if (menu==2){
-            key=-key;                       //switches key for DECRYPTION
+            key=-key;           //switches key for DECRYPTION
         }
         for (count=0; count<=max; count++){                         //for each char, checks if it's a letter.
             if (message[count]>=65 && message[count]<=90){          //if true, assigns new value and copys into
@@ -110,7 +111,7 @@ int main()
         
         printf("Enter filename where cipher key is located, followed by <enter>:\n");
         scanf("%s", keyname);
-        subskey=fopen(keyname, "r");
+        subskey=fopen(keyname, "r");    //opens user specifien file containing decryption key
         
         if (subskey==NULL){
             printf("Unable to open file, or does not exist - please restart.\n");
@@ -119,16 +120,15 @@ int main()
         
         fscanf(subskey, "%[^0]c", subs);
         
-        subsmax=countMax(subs);     //counts number of chars in key, if incorrect exits.
-    
-        for (count=0; count<=max; count++){    
-            if (subs[count]>=97 && subs[count]<=122)  //checks for lower case and converts to upper case
-                subs[count] = subs[count]-32;
-        }
-   
+        subsmax=countMax(subs);     //counts number of chars in key, if incorrect exits. 
         if (subsmax!=26){
             printf("Incorrect key format, please try again using exactly 26 characters.\n");
             return 0;
+        }
+        
+        for (count=0; count<=max; count++){    
+            if (subs[count]>=97 && subs[count]<=122)  //checks for lower case and converts to upper case
+                subs[count] = subs[count]-32;
         }
     
         for (count=0; count<=max; count++){                 //processes each char in array 1 at a time
@@ -136,7 +136,8 @@ int main()
                 message[count] = applySubs(message[count], subs, alpha);
             }
         }
-        printf("\nYour encrytped message reads:\n%s\n", message); 
+        printf("\nYour encrytped message has been saved to 'output.txt' and reads:\n%s\n", message); 
+        fprintf(output, "%s", message);   
         
         return 0;
     }
@@ -166,34 +167,39 @@ int main()
             return 0;
         }
         
-        fscanf(subskey, "%[^0]c", subs);       
+        fscanf(subskey, "%[^0]c", subs);       //reads input file until reaching a terminating zero
         
-        subsmax=countMax(subs);
-    
-        for (count=0; count<=max; count++){    
-            if (subs[count]>=97 && subs[count]<=122)  //checks for lower case and converts to upper case
-                subs[count] = subs[count]-32;
-            }
-   
+        subsmax=countMax(subs);     //checks key is valid
         if (subsmax!=26){
             printf("Incorrect key format, please try again using exactly 26 characters.\n");
             return 0;
         }
-    
+        
+        for (count=0; count<=max; count++){    
+            if (subs[count]>=97 && subs[count]<=122)  //checks for lower case and converts to upper case
+                subs[count] = subs[count]-32;
+            }
+
         for (count=0; count<=max; count++){
-            if (message[count]>=65 && message[count]<=90){            
-                message[count] = undoSubs(message[count], subs, alpha);
+            if (message[count]>=65 && message[count]<=90){            //applys decryption key 1 char at a time
+                message[count] = undoSubs(message[count], subs, alpha);    
             }
         }
-        printf("\nYour message reads:\n%s\n", message); 
+        printf("\nYour message has been saved to 'output.txt' and reads:\n%s\n", message); 
+        fprintf(output, "%s", message);
         return 0;
    
 }
 //-------------------------------------------------------------//
+//ROTATION DECRYPTION, NO KEY..
+//takes message from user specified input file, applies first key value
+//reads a word from dictionary file and checks for a match in processed message, continues until all words in file have been checked
+//if at least 2 matching words are found, prompts user to check deryption then save and exit or continue.
+//if no matching words are found applies key+1, and repeat test.
 
     else if (menu==5){
         FILE *words;
-        words=fopen("words.txt", "r");
+        words=fopen("words.txt", "r");  //opens dictionary file
         
         int total=0, same=0;
         int m=0;
@@ -208,28 +214,32 @@ int main()
                     }      
                 }
 
-                fgets(wordtest, sizeof wordtest, words); // read first line from test words and 
+                fgets(wordtest, sizeof wordtest, words);    // read first line from test words and 
                 total=0;
-                while (feof(words)==0){
-                    same=wordcheck(newmessage, wordtest);
+                while (feof(words)==0){                     //while file is NOT at end of file
+                    same=wordcheck(newmessage, wordtest);    //function to check if word exists in message
                     total=total+same;
-                    fgets(wordtest, sizeof wordtest, words);
-                    
+                    fgets(wordtest, sizeof wordtest, words); //reads next word/line from dictionary into test array
+                    if (total>10)                           //if a large amount of matching words are found 
+                        break;                              //stops testing additional words and exits while loop
                 }
                 printf("%d words matched with key '%d'!\n", total, key); 
-                    if (total>=3){
+                if (m!=1){
+                    if (total>=2){
                         printf("\n%s\n\n", newmessage);
                         printf("High probability of successful decryption with key value %d.\n\nPress '1' to save file or any other key to continue testing.\n", key);
                         scanf("%d", &m);
                         if (m==1){
-                            printf("\nYour message has been printed to file 'output.txt'\");
+                            printf("\nYour message has been printed to file 'output.txt'\n");
                             fprintf(output, "%s", newmessage);
                             return 0;
                         }
                         
                             
                     }
-            rewind(words);                    
+                }
+
+            rewind(words);      //sets pointer back to start of file              
         }
         
 
@@ -245,4 +255,6 @@ int main()
         }
    
 }
+
+
 

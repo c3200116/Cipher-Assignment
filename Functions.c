@@ -49,7 +49,7 @@ int countMax(char message[]){
 
 //-----------------------------------------//
 //ROTATION CIPHER FUNCTION
-//Takes sinlge char input from message array and key value.
+//Takes single char input from message array and key value.
 //Outputs new char.
 //Adds key value to char ascii value, checks if it still falls within alphabet range.
 //If outside range,adds or subtracts 26 to 'wrap around' to start of alphabetical values.
@@ -65,7 +65,7 @@ char applyKey (char x, int y){
 
 
 //------------------------------------------------------------------------//
-//Takes a rotation key value and checks if it is within a valid range
+//Takes a rotation key value and checks if it is within a valid range (-25 to 25)
 //if not, asks for repeat input or exits.
 //Function inputs are initial key value and pre-set counter. Outputs a usuable key.
 
@@ -90,17 +90,17 @@ int keycheck(int key, int c){
 
 //-------------------------------------------------------------//
 //WORD ANALYSIS..
-//takes an input message string and test word then checks each character sequentially against message text
+//takes an input message string and single test word then checks each character sequentially against message text
 //if at any point the values do not match, breaks and restarts test word sequence from first value
 //while continuing through message text. 
-//If all test values successfully match sequentially a word has been found and count is increased and returned.
+//If all test values successfully match sequentially a word has been found, count is increased and returned.
 
 int wordcheck(char * newmessage, char * wordtest){
     int i=1, j=0, found=0, count=0;
     int messageLen=0, testLen=0;
 
     messageLen = strlen(newmessage);      // length of string
-    testLen = strlen(wordtest)-2;      // length of word to be searched
+    testLen = strlen(wordtest)-2;           // length of word to be searched
     
     
     for(i=0; i <= messageLen-testLen; i++){
